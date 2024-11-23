@@ -12,10 +12,11 @@ public class Penduduk {
     static class Frame extends JFrame {
         CardLayout cardLayout = new CardLayout(); 
         JPanel cardPanel = new JPanel(cardLayout);
+        
 
         public Frame() {
             super("Input Data Penduduk");
-            setSize(600, 400);
+            setSize(600, 500);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLayout(new BorderLayout());
  
@@ -33,7 +34,8 @@ public class Penduduk {
 
         private JPanel createInputPage() {
             JPanel inputPanel = new JPanel(new BorderLayout());
-            JPanel formPanel = new JPanel(new GridLayout(0, 2, 5, 5));
+            JPanel frame = new JPanel(new GridLayout(0, 2, 5, 5));
+            frame.setBackground(new Color(255, 255,255)); 
 
             JLabel NIK = new JLabel(" NIK  :  ");
             JTextField NIKValue = new JTextField(10);
@@ -43,9 +45,11 @@ public class Penduduk {
             JTextField tempatLValue = new JTextField(10);
             JLabel tanggalLahir = new JLabel(" Tanggal Lahir  :  ");
             JDateChooser ttlValue = new JDateChooser();
+            
+            JLabel jenisKelamin = new JLabel("Pilih Jenis Kelamin:");
             JRadioButton priaButton = new JRadioButton("Pria");
             JRadioButton wanitaButton = new JRadioButton("Wanita");
-            JLabel jenisKelamin = new JLabel("Pilih Jenis Kelamin:");
+
             JLabel golonganDarah = new JLabel("Pilih Gol Darah:");
             JRadioButton golA = new JRadioButton("A");
             JRadioButton golB = new JRadioButton("B");
@@ -66,56 +70,122 @@ public class Penduduk {
             String[] agamaList = {"Islam", "Kristen", "Katholik", "Hindu", "Buddha", "Konghucu"};
             JComboBox<String> agamaComboBox = new JComboBox<>(agamaList);
 
+            JLabel status = new JLabel("Status Perkawinan:");
+            String[] statusList = {"Belum Menikah", "Menikah","Janda","Duda"};
+            JComboBox<String> statusBox = new JComboBox<>(statusList);
+
+            JLabel pekeerjaan = new JLabel("Pilih pekerjaan: ");
+            JCheckBox karyawanSwasta = new JCheckBox("Karyawan Swasta");
+            JCheckBox PNS = new JCheckBox("PNS");
+            JCheckBox wiraswasta = new JCheckBox("Wiraswasta");
+            JCheckBox akademisi = new JCheckBox("Akademisi");
+            JCheckBox pengangguran = new JCheckBox("Pengangguran");
+
+            JLabel negara = new JLabel("Pilih Kewarganegaraan: ");
+            JRadioButton WNI = new JRadioButton("WNI");
+            JRadioButton WNA = new JRadioButton("WNA");
+            JTextField negaraWNA = new JTextField(20);
+            negaraWNA.setEnabled(false);
 
 
             JLabel kosong =  new JLabel("\n");
             JLabel kosong2 =  new JLabel("\n");
+            JLabel kosong3 =  new JLabel("\n");
 
             JButton submit = new JButton("Submit");
 
+            ButtonGroup kelamin = new ButtonGroup();
+            kelamin.add(priaButton);
+            kelamin.add(wanitaButton);
+
+            ButtonGroup golDarah = new ButtonGroup();
+            golDarah.add(golA);
+            golDarah.add(golO);
+            golDarah.add(golB);
+            golDarah.add(golAB);
+
+            ButtonGroup kenegaraan = new ButtonGroup();
+            kenegaraan.add(WNI);
+            kenegaraan.add(WNA);
+
             //NIK
-            formPanel.add(NIK);
-            formPanel.add(NIKValue);
+            frame.add(NIK);
+            frame.add(NIKValue);
             //Nama
-            formPanel.add(nama);
-            formPanel.add(namaValue);
+            frame.add(nama);
+            frame.add(namaValue);
             //Tempat Tanggal lahir
-            formPanel.add(tempatL);
-            formPanel.add(tempatLValue);
+            frame.add(tempatL);
+            frame.add(tempatLValue);
             //Tanggal Lahir
-            formPanel.add(tanggalLahir);
-            formPanel.add(ttlValue);
+            frame.add(tanggalLahir);
+            frame.add(ttlValue);
             //Jenis Kelamain
-            formPanel.add(jenisKelamin);
-            formPanel.add(kosong);
-            formPanel.add(priaButton);
-            formPanel.add(wanitaButton);
+            frame.add(jenisKelamin);
+            frame.add(kosong);
+            frame.add(priaButton);
+            frame.add(wanitaButton);
             //Golongan Darah
-            formPanel.add(golonganDarah);
-            formPanel.add(kosong2);
-            formPanel.add(golA);
-            formPanel.add(golB);
-            formPanel.add(golO);
-            formPanel.add(golAB);
+            frame.add(golonganDarah);
+            frame.add(kosong2);
+            frame.add(golA);
+            frame.add(golB);
+            frame.add(golO);
+            frame.add(golAB);
             //Alamat
-            formPanel.add(alamat);
-            formPanel.add(alamatValue);
+            frame.add(alamat);
+            frame.add(alamatValue);
             //RT/RW
-            formPanel.add(RTRW);
-            formPanel.add(RTRWValue);
+            frame.add(RTRW);
+            frame.add(RTRWValue);
             //Kel/Desa
-            formPanel.add(KelDesa);
-            formPanel.add(KelDesaValue);
+            frame.add(KelDesa);
+            frame.add(KelDesaValue);
             //Kecamatan
-            formPanel.add(kecamatan);
-            formPanel.add(kecamatanValue);
+            frame.add(kecamatan);
+            frame.add(kecamatanValue);
             //Agama
-            formPanel.add(agama);
-            formPanel.add(agamaComboBox);
+            frame.add(agama);
+            frame.add(agamaComboBox);
+            //Status Perkawinan
+            frame.add(status);
+            frame.add(statusBox);
+            //Pekerjaan
+            frame.add(pekeerjaan);
+            frame.add(karyawanSwasta);
+            frame.add(PNS);
+            frame.add(wiraswasta);
+            frame.add(akademisi);
+            frame.add(pengangguran);
+            //Kewarganegaraan
+            frame.add(negara);
+            frame.add(kosong3);
+            frame.add(WNI);
+            frame.add(WNA);
+            frame.add(negaraWNA);
 
 
-            inputPanel.add(formPanel, BorderLayout.CENTER);
+            inputPanel.add(frame, BorderLayout.CENTER);
             inputPanel.add(submit, BorderLayout.SOUTH);
+
+            WNA.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e){
+                    negaraWNA.setEnabled(WNA.isSelected());
+                    
+                }
+            });
+
+            pengangguran.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    boolean isPengangguranChecked = pengangguran.isSelected();
+                    karyawanSwasta.setEnabled(!isPengangguranChecked);
+                    PNS.setEnabled(!isPengangguranChecked);
+                    wiraswasta.setEnabled(!isPengangguranChecked);
+                    akademisi.setEnabled(!isPengangguranChecked);
+                }
+            });
 
             submit.addActionListener(new ActionListener() {
                 @Override
@@ -131,6 +201,7 @@ public class Penduduk {
                     String kelDesa = KelDesaValue.getText();
                     String kecamatan = kecamatanValue.getText();
                     String agama = (String) agamaComboBox.getSelectedItem();
+                    String status = (String) statusBox.getSelectedItem();
 
                     if (priaButton.isSelected()) {
                         jenisKelamin = priaButton.getText();
@@ -150,11 +221,25 @@ public class Penduduk {
                         golonganDarah = golAB.getText();
                     }
 
+                    StringBuilder pekerjaan = new StringBuilder();
+                    if (pengangguran.isSelected()) {
+                       pekerjaan.append("Pengangguran");
+                    } else {
+                        if (karyawanSwasta.isSelected())pekerjaan.append(karyawanSwasta.getText()+", ");
+                        if (PNS.isSelected())pekerjaan.append(PNS.getText()+", ");
+                        if (wiraswasta.isSelected())pekerjaan.append(wiraswasta.getText()+", ");
+                        if (akademisi.isSelected())pekerjaan.append(akademisi.getText()+", ");
+                        if (pekerjaan.length() > 0) {
+                           pekerjaan.setLength(pekerjaan.length() - 2);
+                        }
+                    }
+
 
                     if (nik.isEmpty() || nama.isEmpty() || tempat.isEmpty() || tanggal == null) {
                         JOptionPane.showMessageDialog(inputPanel, "Mohon isi semua field!", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     } else {
+                        
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         String tanggalFormatted = sdf.format(tanggal);
 
@@ -170,6 +255,8 @@ public class Penduduk {
                                 "<b>Kel/Desa:</b> " + kelDesa + "<br>" +
                                 "<b>Kecamatan:</b> " + kecamatan + "<br>" +
                                 "<b>Agama:</b> " + agama + "<br>" +
+                                "<b>Status Perkawinan:</b> " + status + "<br>" +
+                                "<b>Pekerjaaan:</b> " + pekerjaan + "<br>" +
                                 "</html>";
                         resultLabel.setText(hasil);
 
