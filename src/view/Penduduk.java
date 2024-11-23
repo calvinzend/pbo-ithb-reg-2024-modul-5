@@ -62,6 +62,10 @@ public class Penduduk {
             JLabel kecamatan= new JLabel("Kecamatan : ");
             JTextField kecamatanValue = new JTextField(10);
 
+            JLabel agama = new JLabel("Pilih Agama: ");
+            String[] agamaList = {"Islam", "Kristen", "Katholik", "Hindu", "Buddha", "Konghucu"};
+            JComboBox<String> agamaComboBox = new JComboBox<>(agamaList);
+
 
 
             JLabel kosong =  new JLabel("\n");
@@ -105,6 +109,9 @@ public class Penduduk {
             //Kecamatan
             formPanel.add(kecamatan);
             formPanel.add(kecamatanValue);
+            //Agama
+            formPanel.add(agama);
+            formPanel.add(agamaComboBox);
 
 
             inputPanel.add(formPanel, BorderLayout.CENTER);
@@ -120,6 +127,10 @@ public class Penduduk {
                     String jenisKelamin = null;
                     String golonganDarah = null;
                     String alamat = alamatValue.getText();
+                    String RT_RW = RTRWValue.getText();
+                    String kelDesa = KelDesaValue.getText();
+                    String kecamatan = kecamatanValue.getText();
+                    String agama = (String) agamaComboBox.getSelectedItem();
 
                     if (priaButton.isSelected()) {
                         jenisKelamin = priaButton.getText();
@@ -155,6 +166,10 @@ public class Penduduk {
                                 "<b>Jenis Kelamin:</b> " + jenisKelamin + "<br>" +
                                 "<b>Golongan Darah:</b> " + golonganDarah + "<br>" +
                                 "<b>Alamat:</b> " + alamat + "<br>" +
+                                "<b>RT/RW:</b> " + RT_RW + "<br>" +
+                                "<b>Kel/Desa:</b> " + kelDesa + "<br>" +
+                                "<b>Kecamatan:</b> " + kecamatan + "<br>" +
+                                "<b>Agama:</b> " + agama + "<br>" +
                                 "</html>";
                         resultLabel.setText(hasil);
 
