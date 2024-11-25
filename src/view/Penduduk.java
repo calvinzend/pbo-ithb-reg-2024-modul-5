@@ -87,10 +87,17 @@ public class Penduduk {
             JTextField negaraWNA = new JTextField(20);
             negaraWNA.setEnabled(false);
 
-            JButton foto = new JButton("Browse File");
+            JLabel fotoLabel = new JLabel("Foto: ");
+            JButton foto = new JButton("Foto");
             JTextField fotoValue = new JTextField(20);
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
+
+            JLabel tandaTanganLabel = new JLabel("tandaTangan: ");
+            JButton tandaTangan = new JButton("Tanda Tangan");
+            JTextField tandaTanganValue = new JTextField(20);
+            JFileChooser tandaTanganChooser = new JFileChooser();
+            tandaTanganChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
 
             JLabel kosong =  new JLabel("\n");
             JLabel kosong2 =  new JLabel("\n");
@@ -168,9 +175,15 @@ public class Penduduk {
             frame.add(WNI);
             frame.add(WNA);
             frame.add(negaraWNA);
+            frame.add(kosong4);
             //Foto
-            frame.add(fotoValue);
+            frame.add(fotoLabel);
             frame.add(foto);
+            frame.add(fotoValue);
+            //tandaTangan
+            frame.add(tandaTanganLabel);
+            frame.add(tandaTangan);
+            frame.add(tandaTanganValue);
 
 
 
@@ -178,13 +191,30 @@ public class Penduduk {
             inputPanel.add(submit, BorderLayout.SOUTH);
             JLabel imageLabel = new JLabel();
 
+            tandaTangan.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    int returnValue = fileChooser.showOpenDialog(inputPanel);
+                    if (returnValue == JFileChooser.APPROVE_OPTION) {
+                        java.io.File selectedFile = fileChooser.getSelectedFile();
+                        tandaTanganValue.setText(selectedFile.getAbsolutePath());
+                        
+                        ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
+            
+                        Image image = imageIcon.getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT);
+                        imageIcon = new ImageIcon(image);
+            
+                        imageLabel.setIcon(imageIcon); 
+                    }
+                }
+            });
             foto.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int returnValue = fileChooser.showOpenDialog(inputPanel);
                     if (returnValue == JFileChooser.APPROVE_OPTION) {
                         java.io.File selectedFile = fileChooser.getSelectedFile();
-                        fotoValue.setText(selectedFile.getAbsolutePath()); // Set the path in the text field
+                        fotoValue.setText(selectedFile.getAbsolutePath());
                         
                         ImageIcon imageIcon = new ImageIcon(selectedFile.getAbsolutePath());
             
@@ -272,11 +302,25 @@ public class Penduduk {
                         JOptionPane.showMessageDialog(inputPanel, "Mohon isi semua field!", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     } else {
-                        String imagePath = fotoValue.getText();
-                        ImageIcon imageIcon = new ImageIcon(imagePath);
-                        Image image = imageIcon.getImage();
-                        Image resizedImage = image.getScaledInstance(250, 200, Image.SCALE_SMOOTH); // Adjust size here
-                        imageIcon = new ImageIcon(resizedImage);
+
+                        String fotoPath = fotoValue.getText().trim();
+                        String tandaTanganPath = tandaTanganValue.getText().trim();
+
+                        JLabel userPhotoLabel = (JLabel) ((JPanel) ((JPanel) cardPanel.getComponent(1)).getComponent(1)).getComponent(0);
+                        JLabel signatureLabel = (JLabel) ((JPanel) ((JPanel) cardPanel.getComponent(1)).getComponent(1)).getComponent(1);
+                
+                        if (!fotoPath.isEmpty()) {
+                            ImageIcon fotoIcon = new ImageIcon(fotoPath);
+                            Image resizedFoto = fotoIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                            userPhotoLabel.setIcon(new ImageIcon(resizedFoto));
+                        }
+                
+                        if (!tandaTanganPath.isEmpty()) {
+                            ImageIcon tandaTanganIcon = new ImageIcon(tandaTanganPath);
+                            Image resizedTandaTangan = tandaTanganIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+                            signatureLabel.setIcon(new ImageIcon(resizedTandaTangan));
+                        }
+                       
                         
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         String tanggalFormatted = sdf.format(tanggal);
@@ -298,14 +342,6 @@ public class Penduduk {
                                 "<b>Kewarganegaraan:</b> " + negara + "<br>" +
                                 "</html>";
                         resultLabel.setText(hasil);
-
-                        JLabel imageLabel = (JLabel) ((JPanel) cardPanel.getComponent(1)).getComponent(1);
-                        imageLabel.setIcon(imageLabel.getIcon()); // This does not change the image icon, need to set the new icon.
-
-
-                        // Pass the ImageIcon selected
-                        // JLabel imageLabel = (JLabel) ((JPanel) cardPanel.getComponent(1)).getComponent(1);
-                        imageLabel.setIcon(imageIcon); 
                         
                         cardLayout.show(cardPanel, "ResultPage");
                     }
@@ -318,15 +354,24 @@ public class Penduduk {
         private JPanel createResultPage() {
             JPanel resultPanel = new JPanel(new BorderLayout());
             JLabel resultLabel = new JLabel("<html><b>Hasil akan ditampilkan di sini</b></html>", SwingConstants.CENTER);
-            // resultPanel.add(resultLabel);
+            resultPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+            resultPanel.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 0));
+            resultPanel.setBackground(new Color(173, 216, 230));
 
-            JLabel imageLabel = new JLabel(); 
-            
+            JPanel imagePanel = new JPanel(new GridLayout(2, 1, 0, 3));
+            imagePanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 40));
+            imagePanel.setBackground(new Color(173, 216, 230));
+            JLabel userPhotoLabel = new JLabel("", SwingConstants.CENTER);
+            JLabel signatureLabel = new JLabel("", SwingConstants.CENTER);
+
+            imagePanel.add(userPhotoLabel);
+            imagePanel.add(signatureLabel);
+             
             JButton backButton = new JButton("Kembali");
             // resultPanel.add(backButton);
             
             resultPanel.add(resultLabel, BorderLayout.WEST);
-            resultPanel.add(imageLabel,BorderLayout.EAST);
+            resultPanel.add(imagePanel, BorderLayout.EAST);
             resultPanel.add(backButton, BorderLayout.SOUTH);
 
             backButton.addActionListener(new ActionListener() {
