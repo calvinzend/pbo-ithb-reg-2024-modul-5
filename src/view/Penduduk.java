@@ -4,6 +4,7 @@ import com.toedter.calendar.JDateChooser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
 
@@ -12,7 +13,7 @@ public class Penduduk {
     static class Frame extends JFrame {
         CardLayout cardLayout = new CardLayout(); 
         JPanel cardPanel = new JPanel(cardLayout);
-        
+        // private JLabel titleLabel;
 
         public Frame() {
             super("Input Data Penduduk");
@@ -34,7 +35,7 @@ public class Penduduk {
 
         private JPanel createInputPage() {
             JPanel inputPanel = new JPanel(new BorderLayout());
-            JPanel frame = new JPanel(new GridLayout(0, 2, 5, 5));
+            JPanel frame = new JPanel(new GridLayout(0, 4, 5, 5));
             frame.setBackground(new Color(255, 255,255)); 
 
             JLabel NIK = new JLabel(" NIK  :  ");
@@ -98,6 +99,16 @@ public class Penduduk {
             JTextField tandaTanganValue = new JTextField(20);
             JFileChooser tandaTanganChooser = new JFileChooser();
             tandaTanganChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
+
+            JLabel berlakuHingga = new JLabel("Berlaku hingga: ");
+            JTextField berlakuHinggaValue = new JTextField(10);
+
+            JLabel kotaPembuatan = new JLabel("Kota Pembuatan: ");
+            JTextField kotaPembuatanValue = new JTextField(10);
+
+            JLabel tanggalPembuatan = new JLabel("Tanggal:");
+            JDateChooser tanggalPembuatanChooser = new JDateChooser();
+            tanggalPembuatanChooser.setDateFormatString("dd-MM-yyyy");
 
             JLabel kosong =  new JLabel("\n");
             JLabel kosong2 =  new JLabel("\n");
@@ -184,7 +195,15 @@ public class Penduduk {
             frame.add(tandaTanganLabel);
             frame.add(tandaTangan);
             frame.add(tandaTanganValue);
-
+            //Berlaku hingga
+            frame.add(berlakuHingga);
+            frame.add(berlakuHinggaValue);
+            //Kota Pembuatan
+            frame.add(kotaPembuatan);
+            frame.add(kotaPembuatanValue);
+            //tanggalPembuatan KTP
+            frame.add(tanggalPembuatan);
+            frame.add(tanggalPembuatanChooser);
 
 
             inputPanel.add(frame, BorderLayout.CENTER);
@@ -261,6 +280,9 @@ public class Penduduk {
                     String agama = (String) agamaComboBox.getSelectedItem();
                     String status = (String) statusBox.getSelectedItem();
                     String negara = WNI.getText();
+                    String berlakuHingga = berlakuHinggaValue.getText();
+                    String kotaPembuatan = kotaPembuatanValue.getText();
+                    java.util.Date  tanggalPembuatan = tanggalPembuatanChooser.getDate();
 
                     if (priaButton.isSelected()) {
                         jenisKelamin = priaButton.getText();
@@ -297,7 +319,6 @@ public class Penduduk {
                         negara = negaraWNA.getText();
                     }
 
-
                     if (nik.isEmpty() || nama.isEmpty() || tempat.isEmpty() || tanggal == null) {
                         JOptionPane.showMessageDialog(inputPanel, "Mohon isi semua field!", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
@@ -325,8 +346,17 @@ public class Penduduk {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                         String tanggalFormatted = sdf.format(tanggal);
 
+                        String tanggalPembuatanHasil = sdf.format(tanggalPembuatan);
+
+                        JLabel kotaPembuatanLabel = (JLabel) ((JPanel) ((JPanel) cardPanel.getComponent(1)).getComponent(1)).getComponent(2);
+                        JLabel tanggalPembuatanLabel = (JLabel) ((JPanel) ((JPanel) cardPanel.getComponent(1)).getComponent(1)).getComponent(3);
+
+                        kotaPembuatanLabel.setText("Kota Pembuatan: " + kotaPembuatan);
+                        tanggalPembuatanLabel.setText("Tanggal Pembuatan: " + tanggalPembuatanHasil );
+
                         JLabel resultLabel = (JLabel) ((JPanel) cardPanel.getComponent(1)).getComponent(0);
                         String hasil = "<html>" +
+                                "<h1>“Republik Harapan Bangsa”</h1>"+
                                 "<b>NIK:</b> " + nik + "<br>" +
                                 "<b>Nama:</b> " + nama + "<br>" +
                                 "<b>Tempat, Tanggal Lahir:</b> " + tempat + ", " + tanggalFormatted + "<br>" +
@@ -340,6 +370,7 @@ public class Penduduk {
                                 "<b>Status Perkawinan:</b> " + status + "<br>" +
                                 "<b>Pekerjaaan:</b> " + pekerjaan + "<br>" +
                                 "<b>Kewarganegaraan:</b> " + negara + "<br>" +
+                                "<b>Berlaku Hingga:</b> " + berlakuHingga + "<br>" +
                                 "</html>";
                         resultLabel.setText(hasil);
                         
@@ -358,18 +389,26 @@ public class Penduduk {
             resultPanel.setBorder(BorderFactory.createEmptyBorder(10, 40, 10, 0));
             resultPanel.setBackground(new Color(173, 216, 230));
 
-            JPanel imagePanel = new JPanel(new GridLayout(2, 1, 0, 3));
-            imagePanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 40));
+            JPanel imagePanel = new JPanel(new GridLayout(4, 1, 0, 3));
+            imagePanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 40, 40));
             imagePanel.setBackground(new Color(173, 216, 230));
-            JLabel userPhotoLabel = new JLabel("", SwingConstants.CENTER);
-            JLabel signatureLabel = new JLabel("", SwingConstants.CENTER);
+            JLabel userPhotoLabel = new JLabel("");
+            JLabel signatureLabel = new JLabel("");
+            JLabel kotaPembuatanLabel = new JLabel("");  
+            JLabel tanggalPembuatanLabel = new JLabel("");
+
+            userPhotoLabel.setAlignmentX(Component.TOP_ALIGNMENT);
+            kotaPembuatanLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            tanggalPembuatanLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            signatureLabel.setAlignmentX(Component.BOTTOM_ALIGNMENT);
 
             imagePanel.add(userPhotoLabel);
+            imagePanel.add(kotaPembuatanLabel);
+            imagePanel.add(tanggalPembuatanLabel);
             imagePanel.add(signatureLabel);
-             
-            JButton backButton = new JButton("Kembali");
-            // resultPanel.add(backButton);
             
+            JButton backButton = new JButton("Kembali");
+
             resultPanel.add(resultLabel, BorderLayout.WEST);
             resultPanel.add(imagePanel, BorderLayout.EAST);
             resultPanel.add(backButton, BorderLayout.SOUTH);
