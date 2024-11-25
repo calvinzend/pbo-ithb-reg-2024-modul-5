@@ -10,7 +10,7 @@ import javax.swing.*;
 public class Penduduk {
     static JButton submit = new JButton("Submit");
     static JButton backButton = new JButton("Kembali");
-    
+
     public JButton getBackButton() {
         return backButton; 
     }
@@ -154,12 +154,14 @@ public class Penduduk {
             frame.add(ttlValue);
             //Jenis Kelamain
             frame.add(jenisKelamin);
-            frame.add(kosong);
             frame.add(priaButton);
             frame.add(wanitaButton);
+            frame.add(kosong);
             //Golongan Darah
             frame.add(golonganDarah);
             frame.add(kosong2);
+            frame.add(new JLabel());
+            frame.add(new JLabel());
             frame.add(golA);
             frame.add(golB);
             frame.add(golO);
@@ -184,6 +186,8 @@ public class Penduduk {
             frame.add(statusBox);
             //Pekerjaan
             frame.add(pekeerjaan);
+            frame.add(new JLabel());
+            frame.add(new JLabel());
             frame.add(karyawanSwasta);
             frame.add(PNS);
             frame.add(wiraswasta);
@@ -191,19 +195,20 @@ public class Penduduk {
             frame.add(pengangguran);
             //Kewarganegaraan
             frame.add(negara);
-            frame.add(kosong3);
             frame.add(WNI);
             frame.add(WNA);
             frame.add(negaraWNA);
-            frame.add(kosong4);
             //Foto
             frame.add(fotoLabel);
             frame.add(foto);
             frame.add(fotoValue);
+            frame.add(new JLabel());
+
             //tandaTangan
             frame.add(tandaTanganLabel);
             frame.add(tandaTangan);
             frame.add(tandaTanganValue);
+            frame.add(new JLabel());
             //Berlaku hingga
             frame.add(berlakuHingga);
             frame.add(berlakuHinggaValue);
@@ -328,7 +333,11 @@ public class Penduduk {
                         negara = negaraWNA.getText();
                     }
 
-                    if (nik.isEmpty() || nama.isEmpty() || tempat.isEmpty() || tanggal == null) {
+                    if (nik.isEmpty() || nama.isEmpty() || tempat.isEmpty() || tanggalLahir == null ||
+            jenisKelamin == null || golonganDarah == null || alamat.isEmpty() || RT_RW.isEmpty() ||
+            kelDesa.isEmpty() || kecamatan.isEmpty() || agama == null || status == null ||
+            pekerjaan.isEmpty() || negara.isEmpty() || berlakuHingga.isEmpty() ||
+            kotaPembuatan.isEmpty()  || tanggalPembuatan == null) {
                         JOptionPane.showMessageDialog(inputPanel, "Mohon isi semua field!", "Error", JOptionPane.ERROR_MESSAGE);
                         return;
                     } else {
@@ -432,10 +441,6 @@ public class Penduduk {
         }
     }
 
-  
-    
-
-    
 
     public static void main(String[] args) {
         new Frame();
