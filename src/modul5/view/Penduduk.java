@@ -1,19 +1,28 @@
-package view;
+package modul5.view;
 
 import com.toedter.calendar.JDateChooser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import javax.swing.*;
 
 public class Penduduk {
+    static JButton submit = new JButton("Submit");
+    static JButton backButton = new JButton("Kembali");
+    
+    public JButton getBackButton() {
+        return backButton; 
+    }
+    public JButton getSumbitButton() {
+        return submit; 
+    }
 
     static class Frame extends JFrame {
         CardLayout cardLayout = new CardLayout(); 
         JPanel cardPanel = new JPanel(cardLayout);
-        // private JLabel titleLabel;
+
+
 
         public Frame() {
             super("Input Data Penduduk");
@@ -115,7 +124,7 @@ public class Penduduk {
             JLabel kosong3 =  new JLabel("\n");
             JLabel kosong4 =  new JLabel("\n");
             
-            JButton submit = new JButton("Submit");
+           
 
             ButtonGroup kelamin = new ButtonGroup();
             kelamin.add(priaButton);
@@ -407,7 +416,6 @@ public class Penduduk {
             imagePanel.add(tanggalPembuatanLabel);
             imagePanel.add(signatureLabel);
             
-            JButton backButton = new JButton("Kembali");
 
             resultPanel.add(resultLabel, BorderLayout.WEST);
             resultPanel.add(imagePanel, BorderLayout.EAST);
@@ -423,6 +431,9 @@ public class Penduduk {
             return resultPanel;
         }
     }
+
+  
+    
 
     
 
